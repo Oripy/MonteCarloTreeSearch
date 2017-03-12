@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="UTF-8">
+      <title>Tic Tac Toe</title>
+      <script type="text/javascript" src="script.js"></script>
+      <script type="text/javascript" src="tictactoe.js"></script>
+      <script type="text/javascript" src="montecarlo.js"></script>
+      <script type="text/javascript" src="node_object.js"></script>
+      <style>
+        td {
+          padding: 0px;
+        }
+
+        table {
+          border-collapse: collapse;
+          margin: auto;
+        }
+
+        div {
+          width: 150px;
+          height: 150px;
+
+          font-size: 100px;
+
+          text-align: center;
+          line-height: 190px;
+
+          background-color: LightBlue;
+          border-style: solid;
+        }
+
+        div:hover {
+          background-color: DeepSkyBlue;
+        }
+
+        p {
+          font-size: 50px;
+          text-align: center;
+        }
+      </style>
+
+    </head>
+    <body>
+      <p id="title">Tic Tac Toe</p>
+      <table>
+        <tr>
+          <td>
+            <div id="0" style="border-width:0px 6px 6px 0px"> </div>
+          </td>
+          <td>
+            <div id="1" style="border-width:0px 6px 6px 6px"> </div>
+          </td>
+          <td>
+            <div id="2" style="border-width:0px 0px 6px 6px"> </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div id="3" style="border-width:6px 6px 6px 0px"> </div>
+          </td>
+          <td>
+            <div id="4" style="border-width:6px 6px 6px 6px"> </div>
+          </td>
+          <td>
+            <div id="5" style="border-width:6px 0px 6px 6px"> </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div id="6" style="border-width:6px 6px 0px 0px"> </div>
+          </td>
+          <td>
+            <div id="7" style="border-width:6px 6px 0px 6px"> </div>
+          </td>
+          <td>
+            <div id="8" style="border-width:6px 0px 0px 6px"> </div>
+          </td>
+        </tr>
+      </table>
+      <p id="result"></p>
+    </body>
+</html>

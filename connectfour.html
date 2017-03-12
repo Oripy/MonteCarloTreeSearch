@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="UTF-8">
+      <title>Connect Four</title>
+      <script type="text/javascript" src="script.js"></script>
+      <script type="text/javascript" src="connectfour.js"></script>
+      <script type="text/javascript" src="montecarlo.js"></script>
+      <script type="text/javascript" src="node_object.js"></script>
+      <style>
+        td {
+          padding: 0px;
+        }
+
+        table {
+          border-collapse: collapse;
+          margin: auto;
+        }
+
+        div {
+          line-height: 100px;
+
+          width: 100px;
+          height: 100px;
+
+          font-size: 100px;
+          text-align: center;
+
+          background-color: LightBlue;
+          border-style: solid;
+          border-width: 3px;
+
+          margin: 0px;
+        }
+
+        /* div:hover {
+          background-color: DeepSkyBlue;
+        } */
+
+        p {
+          font-size: 50px;
+          text-align: center;
+        }
+
+        .highlight {
+          background-color: DeepSkyBlue;
+        }
+
+      </style>
+    </head>
+    <body>
+      <p id="title">Connect Four</p>
+      <table>
+        <tr>
+          <td>
+            <div id="0"> </div>
+          </td>
+          <td>
+            <div id="1"> </div>
+          </td>
+          <td>
+            <div id="2"> </div>
+          </td>
+          <td>
+            <div id="3"> </div>
+          </td>
+          <td>
+            <div id="4"> </div>
+          </td>
+          <td>
+            <div id="5"> </div>
+          </td>
+          <td>
+            <div id="6"> </div>
+          </td>
+
+        </tr>
+        <tr>
+          <td>
+            <div id="7"> </div>
+          </td>
+          <td>
+            <div id="8"> </div>
+          </td>
+          <td>
+            <div id="9"> </div>
+          </td>
+          <td>
+            <div id="10"> </div>
+          </td>
+          <td>
+            <div id="11"> </div>
+          </td>
+          <td>
+            <div id="12"> </div>
+          </td>
+          <td>
+            <div id="13"> </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div id="14"> </div>
+          </td>
+          <td>
+            <div id="15"> </div>
+          </td>
+          <td>
+            <div id="16"> </div>
+          </td>
+          <td>
+            <div id="17"> </div>
+          </td>
+          <td>
+            <div id="18"> </div>
+          </td>
+          <td>
+            <div id="19"> </div>
+          </td>
+          <td>
+            <div id="20"> </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div id="21"> </div>
+          </td>
+          <td>
+            <div id="22"> </div>
+          </td>
+          <td>
+            <div id="23"> </div>
+          </td>
+          <td>
+            <div id="24"> </div>
+          </td>
+          <td>
+            <div id="25"> </div>
+          </td>
+          <td>
+            <div id="26"> </div>
+          </td>
+          <td>
+            <div id="27"> </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div id="28"> </div>
+          </td>
+          <td>
+            <div id="29"> </div>
+          </td>
+          <td>
+            <div id="30"> </div>
+          </td>
+          <td>
+            <div id="31"> </div>
+          </td>
+          <td>
+            <div id="32"> </div>
+          </td>
+          <td>
+            <div id="33"> </div>
+          </td>
+          <td>
+            <div id="34"> </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div id="35"> </div>
+          </td>
+          <td>
+            <div id="36"> </div>
+          </td>
+          <td>
+            <div id="37"> </div>
+          </td>
+          <td>
+            <div id="38"> </div>
+          </td>
+          <td>
+            <div id="39"> </div>
+          </td>
+          <td>
+            <div id="40"> </div>
+          </td>
+          <td>
+            <div id="41"> </div>
+          </td>
+        </tr>
+      </table>
+      <p id="result"></p>
+    </body>
+</html>
