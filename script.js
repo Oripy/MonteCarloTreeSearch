@@ -64,9 +64,6 @@ window.onload = function() {
           document.getElementById("result").innerHTML = result;
         }
         game.show(state);
-        // if (game.winner(state) != -1 || players[game.get_next_player(state)-1] == "Human") {
-        //   clearInterval(launch);
-        // }
       }
     }
   }
