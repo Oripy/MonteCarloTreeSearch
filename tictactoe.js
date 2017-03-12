@@ -10,6 +10,10 @@ var Game = function() {
     }
   }
 
+  this.get_move(move) {
+    return move;
+  }
+
   this.start = function(first_player) {
     var first_player = (typeof first_player !== 'undefined') ? first_player : 2;
     return [0, 0, 0,

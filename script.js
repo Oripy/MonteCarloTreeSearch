@@ -30,41 +30,43 @@ window.onload = function() {
   }
 
   var mc = new MonteCarlo(game, state);
+  var simul = mc.start();
 
   for (var i = 0; i < game.board_length; i++) {
     document.getElementById(i.toString()).onmousedown = function() {
       if (game.winner(state) != -1) {
         state = game.start(Math.floor(Math.random()*2)+1);
+        clearInterval(simul);
         mc = new MonteCarlo(game, state);
+        mc.start();
         document.getElementById("result").innerHTML = "";
       } else {
-        launch = setInterval(function(move) {
-          if (players[game.get_next_player(state)-1] == "Human") {
-            var new_state = game.next_state(state, move);
-            if (new_state != -1) {
-              last_move = move;
-              state = new_state;
-              mc.set_root(state, last_move);
-            }
-          } else {
-            last_move = mc.next();
-            state = game.next_state(state, last_move);
+        if (players[game.get_next_player(state)-1] == "Human") {
+          move = game.get_move(state, parseInt(this.id));
+          var new_state = game.next_state(state, move);
+          if (new_state != -1) {
+            last_move = move;
+            state = new_state;
             mc.set_root(state, last_move);
           }
-          var winner = game.winner(state);
-          if (winner != -1) {
-            if (winner == 0) {
-              var result = "Egalité"
-            } else {
-              var result = players[winner-1]+" gagne";
-            }
-            document.getElementById("result").innerHTML = result;
+        } else {
+          last_move = mc.next();
+          state = game.next_state(state, last_move);
+          mc.set_root(state, last_move);
+        }
+        var winner = game.winner(state);
+        if (winner != -1) {
+          if (winner == 0) {
+            var result = "Egalité"
+          } else {
+            var result = players[winner-1]+" gagne";
           }
-          game.show(state);
-          if (game.winner(state) != -1 || players[game.get_next_player(state)-1] == "Human") {
-            clearInterval(launch);
-          }
-        }, 100, parseInt(this.id));
+          document.getElementById("result").innerHTML = result;
+        }
+        game.show(state);
+        // if (game.winner(state) != -1 || players[game.get_next_player(state)-1] == "Human") {
+        //   clearInterval(launch);
+        // }
       }
     }
   }

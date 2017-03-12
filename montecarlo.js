@@ -5,19 +5,13 @@ var MonteCarlo = function(game, state) {
   this.root_node.get_player();
   this.nb_simul = 0;
 
-  this.next = function() {
-    var finished = false;
-    var count = 0;
-    var start = new Date();
-    while ((!finished) && (!this.root_node.terminal)) {
-      count++;
-      this.nb_simul++;
-      if (count >= 10) {
-        if (new Date() - start >= 1000) {
-          finished = true;
-        }
-        count = 0;
-      }
+  this.start = function() {
+    // var self = this;
+    return setInterval(this.simul.bind(this), 0);
+  }
+
+  this.simul = function() {
+    if (!this.root_node.terminal) {
       // INIT
       var current_node = this.root_node;
       this.root_node.visits++;
@@ -48,12 +42,31 @@ var MonteCarlo = function(game, state) {
         current_node = current_node.parent_node;
       } while (current_node.parent_node !== undefined);
     }
+    this.nb_simul++;
+    // console.log(this.nb_simul);
+  }
+
+  this.next = function() {
+    // var finished = false;
+    // var count = 0;
+    // var start = new Date();
+    // while ((!finished) && (!this.root_node.terminal)) {
+    //   count++;
+    //   this.nb_simul++;
+    //   if (count >= 10) {
+    //     if (new Date() - start >= 1000) {
+    //       finished = true;
+    //     }
+    //     count = 0;
+    //   }
+    //   this.simul();
+    // }
 
     var selected_node = this.root_node.get_children().sort(node_compare_success)[0];
     // var selected_node = this.root_node.get_children().sort(node_compare_values)[0];
 
     // console.log("-----");
-    // console.log("num simul:",this.nb_simul, "duration:", new Date() - start);
+    console.log("num simul:",this.nb_simul);
     // // console.log(this.root_node);
     // list_nodes = this.root_node.get_children().sort(node_compare_success);
     // for (var i = 0; i < this.root_node.get_children().length; i++) {

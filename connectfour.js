@@ -1,13 +1,15 @@
 var Game = function() {
                          //no player, player1, player2
-  this.display_values = [" ",       "●",    "○"];
+  this.display_values = ['<circle cx="50" cy="50" r="40" fill="White" />',
+                         '<circle cx="50" cy="50" r="40" fill="Red" />',
+                         '<circle cx="50" cy="50" r="40" fill="Yellow" />',];
   this.board_length = 7*6;
   this.width = 7;
   this.height = 6;
 
   this.show = function(state) {
     for (var i = 0; i < state.length-1; i++) {
-      document.getElementById(i.toString()).innerHTML = this.display_values[state[i]];
+      document.getElementById(i.toString()).innerHTML = '<svg width="100" height="100"><rect x="0" y="0" width="100" height="100" fill="Blue" />'+this.display_values[state[i]]+'</svg>';
     }
   }
 
@@ -22,6 +24,24 @@ var Game = function() {
             first_player];
   }
 
+  this.get_move = function(state, move) {
+    if (move < 0) {
+      return -1;
+    }
+    var j = move%this.width;
+    var index = -1;
+    var realmove = -1;
+    for (var i = this.height-1; i >= 0; i--) {
+      index = i*this.width+j;
+      if (state[index] == 0) {
+        return index;
+      }
+    }
+    if (realmove == -1) {
+      return -1;
+    }
+  }
+
   this.get_next_player = function(state) {
     return state[state.length-1]%2+1;
   }
@@ -32,16 +52,7 @@ var Game = function() {
 
   this.next_state = function(state, move) {
     var new_state = [];
-    var j = move%this.width;
-    var index = -1;
-    var realmove = -1;
-    for (var i = this.height-1; i >= 0; i--) {
-      index = i*this.width+j;
-      if (state[index] == 0) {
-        realmove = index;
-        break;
-      }
-    }
+    var realmove = this.get_move(state, move);
     if (realmove == -1) {
       return -1;
     }
