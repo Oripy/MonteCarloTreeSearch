@@ -52,7 +52,7 @@ var Game = function() {
     }
   }
 
-  this.get_move(move) {
+  this.get_move = function(state, move) {
     return move;
   }
 

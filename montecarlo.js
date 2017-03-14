@@ -47,21 +47,6 @@ var MonteCarlo = function(game, state) {
   }
 
   this.next = function() {
-    // var finished = false;
-    // var count = 0;
-    // var start = new Date();
-    // while ((!finished) && (!this.root_node.terminal)) {
-    //   count++;
-    //   this.nb_simul++;
-    //   if (count >= 10) {
-    //     if (new Date() - start >= 1000) {
-    //       finished = true;
-    //     }
-    //     count = 0;
-    //   }
-    //   this.simul();
-    // }
-
     var selected_node = this.root_node.get_children().sort(node_compare_success)[0];
     // var selected_node = this.root_node.get_children().sort(node_compare_values)[0];
 

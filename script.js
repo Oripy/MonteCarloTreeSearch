@@ -1,9 +1,21 @@
 window.onload = function() {
-  var players = ["Human", "Ai 2"];
+  var players = ["Human", "Ai"];
   var game = new Game();
   var state = game.start();
   game.show(state);
   var last_move = null;
+
+  show_winner = function(game, state) {
+    var winner = game.winner(state);
+    if (winner != -1) {
+      if (winner == 0) {
+        var result = "Egalité"
+      } else {
+        var result = players[winner-1]+" gagne";
+      }
+      document.getElementById("result").innerHTML = result;
+    }
+  }
 
   if (!["Tic Tac Toe", "Connect Four", "Quarto"].includes(document.getElementById("title").innerHTML)) {
     console.log("Game not detected");
@@ -48,22 +60,25 @@ window.onload = function() {
             last_move = move;
             state = new_state;
             mc.set_root(state, last_move);
+            game.show(state);
+            show_winner(game, state);
           }
+          setTimeout(function() {
+            if (players[game.get_next_player(state)-1] != "Human") {
+              last_move = mc.next();
+              state = game.next_state(state, last_move);
+              mc.set_root(state, last_move);
+              game.show(state);
+              show_winner(game, state);
+            }
+          }, 1000);
         } else {
           last_move = mc.next();
           state = game.next_state(state, last_move);
           mc.set_root(state, last_move);
+          game.show(state);
+          show_winner(game, state);
         }
-        var winner = game.winner(state);
-        if (winner != -1) {
-          if (winner == 0) {
-            var result = "Egalité"
-          } else {
-            var result = players[winner-1]+" gagne";
-          }
-          document.getElementById("result").innerHTML = result;
-        }
-        game.show(state);
       }
     }
   }
