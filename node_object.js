@@ -30,8 +30,27 @@ var Node = function(move, parent_node, game, depth) {
   this.value = 0;
   this.winner = null;
 
-  this.proven_win = false;
-  this.proven_loss = false;
+  // this.proven_win = false;
+  // this.proven_loss = false;
+}
+
+Node.prototype.get_score = function() {
+  var winner = this.get_winner();
+  var out = 0;
+  if (winner == this.get_player()) {
+    if (this.get_player() == 1) {
+      out = 100-this.depth;
+    } else {
+      out = -100+this.depth;
+    }
+  } else if (winner == this.get_opponent()) {
+    if (this.get_player() == 1) {
+      out = -100+this.depth;
+    } else {
+      out = 100-this.depth;
+    }
+  }
+  return out;
 }
 
 Node.prototype.get_state = function() {
@@ -92,42 +111,42 @@ Node.prototype.get_UCB1 = function() {
 }
 
 Node.prototype.get_winner = function() {
-  if (this.proven_win) {
-    return this.get_player();
-  } else if (this.proven_loss) {
-    return this.get_opponent();
-  } else {
-    var winner;
-    if (this.winner == null) {
-      winner = this.game.winner(this.get_state());
+  // if (this.proven_win) {
+    // return this.get_player();
+  // } else if (this.proven_loss) {
+    // return this.get_opponent();
+  // } else {
+    // var winner;
+    // if (this.winner == null) {
+      // winner = this.game.winner(this.get_state());
 
-      if (winner == this.get_player()) {
-        this.proven_win = true;
-        this.parent_node.proven_loss = true;
-      } else
-      if (winner == this.get_opponent()) {
-        this.proven_loss = true;
-        if (this.parent_node != undefined) {
-          var all_loss = true;
-          var siblings = this.parent_node.get_children();
-          for (var i = 0; i < siblings.length; i++) {
-            if (!siblings[i].proven_loss) {
-              all_loss = false;
-            }
-          }
-          if (all_loss) {
-            this.parent_node.proven_win = true;
-          }
-        }
-      }
-    }
-    this.winner = winner;
-    return this.winner;
-  }
-  // if (this.winner == null) {
-  //   this.winner = this.game.winner(this.get_state());
+      // if (winner == this.get_player()) {
+        // this.proven_win = true;
+        // this.parent_node.proven_loss = true;
+      // } else
+      // if (winner == this.get_opponent()) {
+        // this.proven_loss = true;
+        // if (this.parent_node != undefined) {
+          // var all_loss = true;
+          // var siblings = this.parent_node.get_children();
+          // for (var i = 0; i < siblings.length; i++) {
+            // if (!siblings[i].proven_loss) {
+              // all_loss = false;
+            // }
+          // }
+          // if (all_loss) {
+            // this.parent_node.proven_win = true;
+          // }
+        // }
+      // }
+    // }
+    // this.winner = winner;
+    // return this.winner;
   // }
-  // return this.winner;
+  if (this.winner == null) {
+    this.winner = this.game.winner(this.get_state());
+  }
+  return this.winner;
 }
 
 Node.prototype.next_move = function() {

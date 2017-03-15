@@ -1,5 +1,7 @@
+var mc;
+
 window.onload = function() {
-  var players = ["Human", "Ai"];
+  var players = ["Human", "Human"];
   var game = new Game();
   var state = game.start();
   game.show(state);
@@ -41,7 +43,7 @@ window.onload = function() {
     }
   }
 
-  var mc = new MonteCarlo(game, state);
+  mc = new MonteCarlo(game, state);
   var simul = mc.start();
 
   for (var i = 0; i < game.board_length; i++) {

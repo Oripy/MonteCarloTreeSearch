@@ -52,6 +52,10 @@ var Game = function() {
     }
   }
 
+  this.show_debug = function(state) {
+    console.log(state);
+  }
+
   this.get_move = function(state, move) {
     return move;
   }

@@ -33,7 +33,7 @@ var MonteCarlo = function(game, state) {
       do {
         if (winner == 0) {
          current_node.value += 0;
-       } else if (current_node.get_player() == winner) {
+        } else if (current_node.get_player() == winner) {
           current_node.wins++;
           current_node.value += 1;
         } else if (current_node.get_opponent() == winner) {
@@ -41,18 +41,51 @@ var MonteCarlo = function(game, state) {
         }
         current_node = current_node.parent_node;
       } while (current_node.parent_node !== undefined);
+      this.nb_simul++;
+      if (this.nb_simul % 1000 == 0) {
+        // console.log(this.nb_simul);
+        // show most promising move
+        this.next();
+      }
+    } else {
+      this.next();
     }
-    this.nb_simul++;
-    // console.log(this.nb_simul);
   }
 
   this.next = function() {
-    var selected_node = this.root_node.get_children().sort(node_compare_success)[0];
+    var children = this.root_node.get_children();
+    if (this.root_node.get_opponent() == 1) {
+      var best_value = -1000;
+      for (var i = 0; i < children.length; i++) {
+        node_value = this.minimax(children[i]);
+        // this.game.show_debug(children[i].get_state());
+        // console.log(i, "maximizing", children[i].move, node_value);
+        // console.log("---");
+        if (node_value > best_value) {
+          best_value = node_value;
+          selected_node = children[i];
+        }
+      }
+    } else {
+      var best_value = 1000;
+      for (var i = 0; i < children.length; i++) {
+        node_value = this.minimax(children[i]);
+        // this.game.show_debug(children[i].get_state());
+        // console.log(i, "minimizing", children[i].move, node_value);
+        // console.log("---");
+        if (node_value < best_value) {
+          best_value = node_value;
+          selected_node = children[i];
+        }
+      }
+    }
+
+    // var selected_node = this.root_node.get_children().sort(node_compare_success)[0];
     // var selected_node = this.root_node.get_children().sort(node_compare_values)[0];
 
     // console.log("-----");
     console.log("num simul:",this.nb_simul);
-    // // console.log(this.root_node);
+    // console.log(this.root_node);
     // list_nodes = this.root_node.get_children().sort(node_compare_success);
     // for (var i = 0; i < this.root_node.get_children().length; i++) {
     //   console.log(list_nodes[i].move,
@@ -63,10 +96,11 @@ var MonteCarlo = function(game, state) {
     // console.log("terminal: ", this.root_node.terminal);
     console.log(this.game.display_values[selected_node.get_player()],
                                          selected_node.move,
-                                         selected_node.value,
-                                         selected_node.wins,
-                                         "/",
-                                         selected_node.visits);
+                                         best_value//,
+                                         //selected_node.wins,
+                                         //"/",
+                                         //selected_node.visits
+                                         );
     // if (selected_node.proven_loss) {
     //   console.log("perdu");
     // }
@@ -74,6 +108,47 @@ var MonteCarlo = function(game, state) {
     //   console.log("gagné");
     // }
     return selected_node.move;
+  }
+
+  var id = 0;
+
+  this.minimax = function(node) {
+    var children = node.get_children();
+    if (children.length == 0) {
+      var id_local = id++;
+      // this.game.show_debug(node.get_state());
+      // console.log(id_local, "score", node.move, node.get_score());
+      // console.log("---");
+      return node.get_score();
+    }
+    var best_value;
+    if (node.get_opponent() == 1) {
+      //maximizing player
+      var id_local = id++;
+      best_value = -1000;
+      for (var i = 0; i < children.length; i++) {
+        if (children[i].visits > 0) {
+          best_value = Math.max(this.minimax(children[i]), best_value);
+        }
+      }
+      // this.game.show_debug(node.get_state());
+      // console.log(id_local, children.length, "maximizing", node.move, best_value);
+      // console.log("---");
+      return best_value;
+    } else {
+      //minimizing player
+      var id_local = id++;
+      best_value = 1000;
+      for (var i = 0; i < children.length; i++) {
+        if (children[i].visits > 0) {
+          best_value = Math.min(this.minimax(children[i]), best_value);
+        }
+      }
+      // this.game.show_debug(node.get_state());
+      // console.log(id_local, children.length, "minimizing", node.move, best_value);
+      // console.log("---");
+      return best_value;
+    }
   }
 
   this.set_root = function(state, move) {

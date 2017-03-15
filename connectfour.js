@@ -13,6 +13,10 @@ var Game = function() {
     }
   }
 
+  this.show_debug = function(state) {
+    console.log(state);
+  }
+
   this.start = function() {
     var first_player = (typeof first_player !== 'undefined') ? first_player : 2;
     return [0, 0, 0, 0, 0, 0, 0,

@@ -1,13 +1,20 @@
 var Game = function() {
                        //no player, player1, player2
-  this.display_values = [" ",       "❌",    "⭕"];
-  // ✗ ○
+  // this.display_values = [" ",       "❌",    "⭕"];
+  this.display_values = [" ",       "✗",    "○"];
   this.board_length = 9;
 
   this.show = function(state) {
     for (var i = 0; i < state.length-1; i++) {
       document.getElementById(i.toString()).innerHTML = this.display_values[state[i]];
     }
+  }
+
+  this.show_debug = function(state) {
+    var display_values = this.display_values;
+    console.log(display_values[state[0]], display_values[state[1]], display_values[state[2]]);
+    console.log(display_values[state[3]], display_values[state[4]], display_values[state[5]]);
+    console.log(display_values[state[6]], display_values[state[7]], display_values[state[8]]);
   }
 
   this.get_move = function(state, move) {
