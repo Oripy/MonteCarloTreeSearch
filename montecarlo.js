@@ -19,12 +19,14 @@ var MonteCarlo = function(game, state) {
         // SELECTION + EXPANSION
         current_node = current_node.next_move();
         // current_node = current_node.next_random_move();
+        current_node.minimax = null;
         current_node.visits++;
       }
 
       while (current_node.get_children().length != 0) {
         // SIMULATION
         current_node = current_node.next_random_move();
+        current_node.minimax = null;
         current_node.visits++;
       }
 
@@ -39,27 +41,40 @@ var MonteCarlo = function(game, state) {
         } else if (current_node.get_opponent() == winner) {
           current_node.value -= 1;
         }
+        current_node.get_minimax();
         current_node = current_node.parent_node;
       } while (current_node.parent_node !== undefined);
       this.nb_simul++;
       if (this.nb_simul % 1000 == 0) {
         // console.log(this.nb_simul);
         // show most promising move
-        this.next();
+        // this.next();
       }
     } else {
-      this.next();
+      // this.next();
     }
   }
 
   this.next = function() {
-    var children = this.root_node.get_children();
+    var children = this.root_node.get_children().sort(node_compare_success);
     if (this.root_node.get_opponent() == 1) {
       var best_value = -1000;
+      // console.log("maximizing");
+      // console.log(this.root_node);
       for (var i = 0; i < children.length; i++) {
-        node_value = this.minimax(children[i]);
+        node_value = children[i].get_minimax();
         // this.game.show_debug(children[i].get_state());
         // console.log(i, "maximizing", children[i].move, node_value);
+        // this.game.show_debug(children[i].get_state());
+        // console.log(this.game.display_values[children[i].get_player()],
+                    // "move:",
+                    // children[i].move,
+                    // "score:",
+                    // node_value,
+                    // "visits:",
+                    // children[i].visits,
+                    // "ratio:",
+                    // Math.round(100*children[i].wins/children[i].visits));
         // console.log("---");
         if (node_value > best_value) {
           best_value = node_value;
@@ -68,10 +83,22 @@ var MonteCarlo = function(game, state) {
       }
     } else {
       var best_value = 1000;
+      // console.log("minimizing");
+      // console.log(this.root_node);
       for (var i = 0; i < children.length; i++) {
-        node_value = this.minimax(children[i]);
+        node_value = children[i].get_minimax();
         // this.game.show_debug(children[i].get_state());
         // console.log(i, "minimizing", children[i].move, node_value);
+        // this.game.show_debug(children[i].get_state());
+        // console.log(this.game.display_values[children[i].get_player()],
+                    // "move:",
+                    // children[i].move,
+                    // "score:",
+                    // node_value,
+                    // "visits:",
+                    // children[i].visits,
+                    // "ratio:",
+                    // Math.round(100*children[i].wins/children[i].visits));
         // console.log("---");
         if (node_value < best_value) {
           best_value = node_value;
@@ -94,13 +121,13 @@ var MonteCarlo = function(game, state) {
     //               list_nodes[i].wins, "/", list_nodes[i].visits);
     // }
     // console.log("terminal: ", this.root_node.terminal);
-    console.log(this.game.display_values[selected_node.get_player()],
-                                         selected_node.move,
-                                         best_value//,
-                                         //selected_node.wins,
-                                         //"/",
-                                         //selected_node.visits
-                                         );
+    // console.log(this.game.display_values[selected_node.get_player()],
+                                         // selected_node.move,
+                                         // best_value//,
+                                         // selected_node.wins,
+                                         // "/",
+                                         // selected_node.visits
+                                         // );
     // if (selected_node.proven_loss) {
     //   console.log("perdu");
     // }
@@ -110,66 +137,40 @@ var MonteCarlo = function(game, state) {
     return selected_node.move;
   }
 
-  var id = 0;
-
-  this.minimax = function(node) {
-    var children = node.get_children();
-    if (children.length == 0) {
-      var id_local = id++;
-      // this.game.show_debug(node.get_state());
-      // console.log(id_local, "score", node.move, node.get_score());
-      // console.log("---");
-      return node.get_score();
-    }
-    var best_value;
-    if (node.get_opponent() == 1) {
-      //maximizing player
-      var id_local = id++;
-      best_value = -1000;
-      for (var i = 0; i < children.length; i++) {
-        if (children[i].visits > 0) {
-          best_value = Math.max(this.minimax(children[i]), best_value);
-        }
-      }
-      // this.game.show_debug(node.get_state());
-      // console.log(id_local, children.length, "maximizing", node.move, best_value);
-      // console.log("---");
-      return best_value;
-    } else {
-      //minimizing player
-      var id_local = id++;
-      best_value = 1000;
-      for (var i = 0; i < children.length; i++) {
-        if (children[i].visits > 0) {
-          best_value = Math.min(this.minimax(children[i]), best_value);
-        }
-      }
-      // this.game.show_debug(node.get_state());
-      // console.log(id_local, children.length, "minimizing", node.move, best_value);
-      // console.log("---");
-      return best_value;
-    }
-  }
-
   this.set_root = function(state, move) {
     if (this.root_node !== undefined) {
       children_list = this.root_node.get_children();
       for (var i=0; i < children_list.length; i++) {
-        if (children_list[i].move === move) {
+        if (equal_moves(children_list[i].move, move)) {
           this.root_node = children_list[i];
           this.root_node.get_children();
           this.root_node.parent_node = undefined;
           return;
         }
       }
-      console.log(this.root_node, state, move);
-      console.log("childnode not found, new root created");
+      // console.log(this.root_node, state, move);
+      // console.log("childnode not found, new root created");
     }
     this.root_node = new Node(null, undefined, this.game, 0);
     this.root_node.state = state;
     this.root_node.get_player();
   }
 }
+
+equal_moves = function(move1, move2) {
+  if ((move1.constructor === Array) && (move1.constructor === Array)) {
+    if(move1.length !== move2.length)
+      return false;
+    for(var i = move1.length; i--;) {
+      if(move1[i] !== move2[i])
+        return false;
+    }
+    return true;
+  } else {
+    return (move1 === move2);
+  }
+}
+
 
 node_compare_values = function(a, b) {
   value = b.value - a.value;

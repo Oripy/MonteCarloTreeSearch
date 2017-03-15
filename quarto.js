@@ -29,11 +29,14 @@ var Game = function() {
 
   this.show = function(state) {
     for (var i = 0; i < this.board_length; i++) {
-      document.getElementById(i.toString()).innerHTML = '<svg version="1.1" baseProfile="full" width="100" height="100" xmlns="http://www.w3.org/2000/svg">'+this.display_values[state[i]]+'</svg>';
+      document.getElementById("p"+i).innerHTML = '<svg version="1.1" baseProfile="full" width="100" height="100" xmlns="http://www.w3.org/2000/svg">'+this.display_values[state[i]]+'</svg>';
+    }
+    if (state[17] != null) {
+      document.getElementById("p"+state[17]).innerHTML = '<svg version="1.1" baseProfile="full" width="100" height="100" xmlns="http://www.w3.org/2000/svg">'+this.display_values[state[this.board_length]]+'</svg>';
     }
     var available = this.list_available(state);
     for (var i = 0; i < this.board_length; i++) {
-      var elem = document.getElementById("p"+i.toString());
+      var elem = document.getElementById(i);
       elem.className = "piece";
       if (this.default_list[i] === state[this.board_length]) {
         elem.className = "selected";
@@ -44,12 +47,13 @@ var Game = function() {
           piece_available = true;
         }
       }
-      if (piece_available || this.default_list[i] === state[this.board_length]) {
+      if (piece_available || (this.default_list[i] === state[this.board_length] && state[17] == null)) {
         elem.innerHTML = '<svg version="1.1" baseProfile="full" width="100" height="100" xmlns="http://www.w3.org/2000/svg">'+this.display_values[this.default_list[i]]+'</svg>';
       } else {
         elem.innerHTML = this.display_values["empty"];
       }
     }
+    
   }
 
   this.show_debug = function(state) {
@@ -57,7 +61,21 @@ var Game = function() {
   }
 
   this.get_move = function(state, move) {
-    return move;
+    if (state[17] !== null) {
+      new_move = [state[17], this.default_list[move]];
+      return new_move;
+    } else {
+      return -1;
+    }
+  }
+  
+  this.init = function() {
+    for (let a = 0; a < 16; a++) {
+      document.getElementById("p"+a).onmousedown = function() {
+        state[17] = a;
+        game.show(state);
+      }
+    }
   }
 
   this.start = function(first_player) {
@@ -67,6 +85,7 @@ var Game = function() {
             0, 0, 0, 0,
             0, 0, 0, 0,
             "0000",
+            null,
             first_player];
   }
 
@@ -92,6 +111,7 @@ var Game = function() {
 
     // change the player recorded to have played the move
     new_state[state.length-1] = this.get_next_player(state);
+    new_state[state.length-2] = null;
 
     return new_state;
   }

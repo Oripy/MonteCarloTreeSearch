@@ -29,6 +29,7 @@ var Node = function(move, parent_node, game, depth) {
   this.terminal = false;
   this.value = 0;
   this.winner = null;
+  this.minimax = null;
 
   // this.proven_win = false;
   // this.proven_loss = false;
@@ -53,6 +54,46 @@ Node.prototype.get_score = function() {
   return out;
 }
 
+Node.prototype.get_minimax = function() {
+  if (this.minimax == null) {
+    var children = this.get_children();
+    if (children.length == 0) {
+      // this.game.show_debug(this.get_state());
+      // console.log("score", this.move, this.get_score());
+      // console.log("---");
+      this.minimax = this.get_score();
+    } else {
+      var best_value;
+      if (this.get_opponent() == 1) {
+        //maximizing player
+        best_value = -1000;
+        for (var i = 0; i < children.length; i++) {
+          if (children[i].visits > 0) {
+            best_value = Math.max(children[i].get_minimax(), best_value);
+          }
+        }
+        // this.game.show_debug(this.get_state());
+        // console.log(children.length, "maximizing", this.move, best_value);
+        // console.log("---");
+        this.minimax = best_value;
+      } else {
+        //minimizing player
+        best_value = 1000;
+        for (var i = 0; i < children.length; i++) {
+          if (children[i].visits > 0) {
+            best_value = Math.min(children[i].get_minimax(), best_value);
+          }
+        }
+        // this.game.show_debug(this.get_state());
+        // console.log(children.length, "minimizing", this.move, best_value);
+        // console.log("---");
+        this.minimax = best_value;
+      }
+    }
+  }
+  return this.minimax;
+}
+
 Node.prototype.get_state = function() {
   if (this.state == null) {
     this.state = this.game.next_state(this.parent_node.state, this.move);
@@ -61,10 +102,8 @@ Node.prototype.get_state = function() {
 }
 
 Node.prototype.get_player = function() {
-  if ((this.state == null) && (this.player == null)) {
-    this.player = this.game.get_next_player(this.get_state());
-  } else if (this.player == null) {
-    this.player = this.get_state()[this.get_state().length-1];
+  if (this.player == null) {
+    this.player = this.game.get_current_player(this.get_state());
   }
   return this.player;
 }
@@ -106,8 +145,12 @@ Node.prototype.get_children = function() {
 
 Node.prototype.get_UCB1 = function() {
   // return (this.wins / this.visits) + Math.sqrt(2 * Math.log(this.parent_node.visits) / this.visits);
-  return ((this.wins + 1) / (this.visits+2)) + Math.sqrt(2 * Math.log(this.parent_node.visits) / (this.visits+1));
-  // return this.value + Math.sqrt(2 * Math.log(this.parent_node.visits)/(this.visits));
+  // return ((this.wins + 1) / (this.visits+2)) + Math.sqrt(2 * Math.log(this.parent_node.visits) / (this.visits+1));
+  if (this.get_player() == 1) {
+    return this.minimax/100 + Math.sqrt(2 * Math.log(this.parent_node.visits)/(this.visits));
+  } else {
+    return -this.minimax/100 + Math.sqrt(2 * Math.log(this.parent_node.visits)/(this.visits));
+  }
 }
 
 Node.prototype.get_winner = function() {

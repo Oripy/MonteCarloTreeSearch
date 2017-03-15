@@ -27,6 +27,28 @@ var Game = function() {
             0, 0, 0, 0, 0, 0, 0,
             first_player];
   }
+  
+  this.init = function() {
+    // Special highlighting of columns
+    for (var a = 0; a < this.board_length; a++) {
+      document.getElementById(a).onmouseover = function() {
+        var index = parseInt(this.id);
+        var x = index%game.width;
+        var y = (index-x)/game.width;
+        for (var j = 0; j < game.width; j++) {
+          for (var i = 0; i < game.height; i++) {
+            index = i*game.width+j;
+            if (j == x) {
+              document.getElementById(index).className = "highlight";
+            } else {
+              document.getElementById(index).className = "none";
+            }
+          }
+        }
+      }
+    }
+    
+  }
 
   this.get_move = function(state, move) {
     if (move < 0) {
@@ -66,10 +88,12 @@ var Game = function() {
     while (i--) new_state[i] = state[i];
     // new_state = state.slice();
 
+    next_player = this.get_next_player(state);
+    
     // record the move
-    new_state[realmove] = this.get_next_player(state);
+    new_state[realmove] = next_player;
     // change the player recorded to have played the move
-    new_state[state.length-1] = this.get_next_player(state);
+    new_state[state.length-1] = next_player;
 
     return new_state;
   }

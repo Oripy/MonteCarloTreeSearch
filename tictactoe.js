@@ -28,6 +28,9 @@ var Game = function() {
             0, 0, 0,
             first_player];
   }
+  
+  this.init = function() { 
+  }
 
   this.get_next_player = function(state) {
     return state[state.length-1]%2+1;

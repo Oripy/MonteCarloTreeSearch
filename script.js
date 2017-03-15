@@ -1,9 +1,11 @@
-var mc;
+var players = ["Ai", "Ai"];
+var game;
+var state;
 
 window.onload = function() {
-  var players = ["Human", "Human"];
-  var game = new Game();
-  var state = game.start();
+  game = new Game()
+  state = game.start()
+  game.init();
   game.show(state);
   var last_move = null;
 
@@ -23,57 +25,42 @@ window.onload = function() {
     console.log("Game not detected");
     return;
   }
-  if (document.getElementById("title").innerHTML == "Connect Four") {
-    for (var a = 0; a < state.length-1; a++) {
-      document.getElementById(a.toString()).onmouseover = function() {
-        var index = parseInt(this.id);
-        var x = index%game.width;
-        var y = (index-x)/game.width;
-        for (var j = 0; j < game.width; j++) {
-          for (var i = 0; i < game.height; i++) {
-            index = i*game.width+j;
-            if (j == x) {
-              document.getElementById(index).className = "highlight";
-            } else {
-              document.getElementById(index).className = "none";
-            }
-          }
-        }
-      }
-    }
-  }
 
-  mc = new MonteCarlo(game, state);
+  var mc = new MonteCarlo(game, state);
   var simul = mc.start();
 
   for (var i = 0; i < game.board_length; i++) {
-    document.getElementById(i.toString()).onmousedown = function() {
+    document.getElementById(i).onmousedown = function() {
       if (game.winner(state) != -1) {
         state = game.start(Math.floor(Math.random()*2)+1);
         clearInterval(simul);
         mc = new MonteCarlo(game, state);
-        mc.start();
+        simul = mc.start();
         document.getElementById("result").innerHTML = "";
       } else {
         if (players[game.get_next_player(state)-1] == "Human") {
           move = game.get_move(state, parseInt(this.id));
+          if (move !== -1) {
           var new_state = game.next_state(state, move);
-          if (new_state != -1) {
-            last_move = move;
-            state = new_state;
-            mc.set_root(state, last_move);
-            game.show(state);
-            show_winner(game, state);
-          }
-          setTimeout(function() {
-            if (players[game.get_next_player(state)-1] != "Human") {
-              last_move = mc.next();
-              state = game.next_state(state, last_move);
+            if (new_state != -1) {
+              last_move = move;
+              state = new_state;
               mc.set_root(state, last_move);
               game.show(state);
               show_winner(game, state);
+              if (game.winner(state) === -1) {
+                setTimeout(function() {
+                  if (players[game.get_next_player(state)-1] != "Human") {
+                    last_move = mc.next();
+                    state = game.next_state(state, last_move);
+                    mc.set_root(state, last_move);
+                    game.show(state);
+                    show_winner(game, state);
+                  }
+                }, 2000);
+              }
             }
-          }, 1000);
+          }
         } else {
           last_move = mc.next();
           state = game.next_state(state, last_move);
