@@ -141,12 +141,14 @@ var MonteCarlo = function(game, state) {
           this.root_node = children_list[i];
           this.root_node.get_children();
           this.root_node.parent_node = undefined;
-          return;
+        } else {
+          delete children_list[i];
         }
       }
-      // console.log(this.root_node, state, move);
-      // console.log("childnode not found, new root created");
+      return;
     }
+    console.log(this.root_node, state, move);
+    console.log("childnode not found, new root created");
     this.root_node = new Node(null, undefined, this.game, 0);
     this.root_node.state = state;
     this.root_node.get_player();
