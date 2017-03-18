@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>7 Wonders Duel</title>
+    <style>
+      #title {
+        text-align: center;
+        align:center;
+        font-size: 80px;
+      }
+
+      .card {
+        display: inline-block;
+        transition: all .2s;
+        transform-origin: 50% 50%;
+      }
+
+      .card:hover {
+        transform: scale(1.2);
+      }
+
+      .commercial {fill: Gold;}
+      .raw {fill: SaddleBrown;}
+      .manufactured {fill: DarkGrey;}
+      .civilian {fill: DodgerBlue;}
+      .scientific {fill: Green;}
+      .military {fill: FireBrick;}
+      .guild {fill: DarkViolet;}
+
+      .age {}
+      .row {
+        text-align: center;
+        margin-top: -70px;
+      }
+
+      #I {display: ;}
+      #I .back {fill: SaddleBrown;}
+      #II {display: none;}
+      #II .back {fill: DodgerBlue;}
+      #III {display: none;}
+      #III .back {fill: DarkViolet;}
+
+      use.icon {
+        width: 25px;
+        height: 25px;
+        fill: black;
+      }
+
+      svg path {
+        fill: inherit;
+      }
+    </style>
+  </head>
+  <body style="background-color:#6DBDD6">
+    <span id="title">7 Wonders Duel</span>
+    <div class="age" id="I">
+      <div class="row">
+        <div id="00" class="card military">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="fill: white;"/>
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="opacity: 0.2"/>
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="40" />
+            <rect x="5" y="25" width="110" height="20" />
+            <use class="icon" x="20" y="13" width="24" height="24" xlink:href="svg/svg-defs.svg#military" />
+            <use class="icon" x="48" y="13" width="24" height="24" xlink:href="svg/svg-defs.svg#military" />
+            <use class="icon" x="76" y="13" width="24" height="24" xlink:href="svg/svg-defs.svg#military" />
+          </svg>
+        </div>
+        <div id="01" class="card military">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="fill: white;"/>
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="opacity: 0.2"/>
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="40" />
+            <rect x="5" y="25" width="110" height="20" />
+            <use class="icon" x="34" y="13" width="24" height="24" xlink:href="svg/svg-defs.svg#military" />
+            <use class="icon" x="62" y="13" width="24" height="24" xlink:href="svg/svg-defs.svg#military" />
+          </svg>
+        </div>
+      </div>
+      <div class="row">
+        <div id="10" class="card back">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="fill: black;"/>
+            <rect x="12" y="12" rx="16" ry="16" width="96" height="146" />
+          </svg>
+        </div>
+        <div id="11" class="card back">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="fill: black;"/>
+            <rect x="12" y="12" rx="16" ry="16" width="96" height="146" />
+          </svg>
+        </div>
+        <div id="12" class="card back">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="fill: black;"/>
+            <rect x="12" y="12" rx="16" ry="16" width="96" height="146" />
+          </svg>
+        </div>
+      </div>
+      <div class="row">
+        <div id="20" class="card military">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="fill: white;"/>
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="opacity: 0.2"/>
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="40" />
+            <rect x="5" y="25" width="110" height="20" />
+          </svg>
+        </div>
+        <div id="21" class="card guild">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="fill: white;"/>
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="opacity: 0.2"/>
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="40" />
+            <rect x="5" y="25" width="110" height="20" />
+          </svg>
+        </div>
+        <div id="22" class="card manufactured">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="fill: white;"/>
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="opacity: 0.2"/>
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="40" />
+            <rect x="5" y="25" width="110" height="20" />
+          </svg>
+        </div>
+        <div id="23" class="card civilian">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="fill: white;"/>
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="opacity: 0.2"/>
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="40" />
+            <rect x="5" y="25" width="110" height="20" />
+          </svg>
+        </div>
+      </div>
+      <div class="row">
+        <div id="30" class="card back">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="fill: black;"/>
+            <rect x="12" y="12" rx="16" ry="16" width="96" height="146" />
+          </svg>
+        </div>
+        <div id="31" class="card back">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="fill: black;"/>
+            <rect x="12" y="12" rx="16" ry="16" width="96" height="146" />
+          </svg>
+        </div>
+        <div id="32" class="card back">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="fill: black;"/>
+            <rect x="12" y="12" rx="16" ry="16" width="96" height="146" />
+          </svg>
+        </div>
+        <div id="33" class="card back">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="fill: black;"/>
+            <rect x="12" y="12" rx="16" ry="16" width="96" height="146" />
+          </svg>
+        </div>
+        <div id="34" class="card back">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="fill: black;"/>
+            <rect x="12" y="12" rx="16" ry="16" width="96" height="146" />
+          </svg>
+        </div>
+      </div>
+      <div class="row">
+        <div id="40" class="card scientific">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="fill: white;"/>
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="opacity: 0.2"/>
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="40" />
+            <rect x="5" y="25" width="110" height="20" />
+          </svg>
+        </div>
+        <div id="41" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="fill: white;"/>
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="opacity: 0.2"/>
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="40" />
+            <rect x="5" y="25" width="110" height="20" />
+          </svg>
+        </div>
+        <div id="42" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="fill: white;"/>
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="opacity: 0.2"/>
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="40" />
+            <rect x="5" y="25" width="110" height="20" />
+          </svg>
+        </div>
+        <div id="43" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="fill: white;"/>
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="opacity: 0.2"/>
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="40" />
+            <rect x="5" y="25" width="110" height="20" />
+          </svg>
+        </div>
+        <div id="44" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="fill: white;"/>
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="opacity: 0.2"/>
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="40" />
+            <rect x="5" y="25" width="110" height="20" />
+          </svg>
+        </div>
+        <div id="45" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="fill: white;"/>
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160" style="opacity: 0.2"/>
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="40" />
+            <rect x="5" y="25" width="110" height="20" />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="age" id="II">
+      <div class="row" >
+        <div id="00" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="01" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="02" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="03" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="04" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="05" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+      </div>
+      <div class="row">
+        <div id="10" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="11" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="12" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="13" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="14" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+      </div>
+      <div class="row">
+        <div id="20" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="21" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="22" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="23" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+      </div>
+      <div class="row">
+        <div id="30" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="31" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="32" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+      </div>
+      <div class="row">
+        <div id="40" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="41" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="age" id="III">
+      <div class="row" >
+        <div id="00" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="01" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+      </div>
+      <div class="row">
+        <div id="10" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="11" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="12" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+      </div>
+      <div class="row">
+        <div id="20" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="21" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="22" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="23" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+      </div>
+      <div class="row">
+        <div id="30" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div class="card">
+          <svg width="120" height="170"></svg>
+        </div>
+        <div id="31" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+      </div>
+      <div class="row">
+        <div id="40" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="41" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="42" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="43" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+      </div>
+      <div class="row">
+        <div id="50" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="51" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="52" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+      </div>
+      <div class="row">
+        <div id="60" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+        <div id="61" class="card">
+          <svg width="120" height="170">
+            <rect x="5" y="5" rx="20" ry="20" width="110" height="160"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
