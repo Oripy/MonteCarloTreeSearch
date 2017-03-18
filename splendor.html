@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
     <title>Splendor</title>
-    <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript" src="script2.js"></script>
     <script type="text/javascript" src="splendor.js"></script>
     <script type="text/javascript" src="montecarlo.js"></script>
     <script type="text/javascript" src="node_object.js"></script>
@@ -14,6 +14,7 @@
         -ms-user-select: none;
         user-select: none;
       }
+
       svg text::selection {
           background: none;
       }
@@ -24,50 +25,40 @@
         font-size: 80px;
       }
 
-      .coin:hover {
-        opacity:0.6;
-      }
-
-      .card:hover {
-        opacity:0.6;
-      }
-
       .noble {
         fill:grey;
+        transition: all .2s;
+        transform-origin: 50% 50%;
       }
-      .noble:hover {
-        opacity:0.6;
+      .card, .coin {
+        transition: all .2s;
+        transform-origin: 50% 50%;
+      }
+
+      .selectable:hover {
+        transform: scale(1.3);
+      }
+
+      .selected {
+        border-radius:15px;
+        border-radius:15px;
+        background-color: navy;
       }
 
       .ctxt {
         font-weight:bold;
         font-style:italic;
         font-family:Helvetica, sans-serif;
-
         fill:white;
-
         stroke:black;
         stroke-width:1px;
         stroke-linecap:butt;
         stroke-linejoin:miter;
       }
-
-      .vp {
-        font-size:35px;
-      }
-
-      .cost {
-        font-size:22px;
-      }
-
-      .player {
-        font-size:50px;
-      }
-
-      .score {
-        font-size:100px;
-      }
-
+      .vp {font-size:35px;}
+      .cost {font-size:22px;}
+      .player {font-size:50px;}
+      .score {font-size:100px;}
       .title {
         font-size:22px;
         fill:Gold;
@@ -90,25 +81,12 @@
         fill:none;
       }
 
-      .red {
-        fill:Crimson;
-      }
-      .green {
-        fill:ForestGreen;
-      }
-      .blue {
-        fill:DodgerBlue;
-      }
-      .black {
-        fill:SaddleBrown;
-      }
-      .white {
-        fill:Beige;
-      }
-
-      .yellow {
-        fill:Gold;
-      }
+      .red {fill:Crimson;}
+      .green {fill:ForestGreen;}
+      .blue {fill:DodgerBlue;}
+      .black {fill:SaddleBrown;}
+      .white {fill:Moccasin;}
+      .yellow {fill:Gold;}
 
       .none {
         fill:none;
@@ -118,13 +96,13 @@
     </style>
   </head>
   <body>
-    <div id="title">Splendor</span>
+    <div id="title">Splendor</div>
     <div id="player1" style="position:absolute;left:100px;">
       <table>
         <tr>
-          <td id="score" colspan="2" align="center">
+          <td colspan="2" align="center">
             <svg width="150" height="100" xmlns="http://www.w3.org/2000/svg" version="1.1">
-              <text x="0" y="90" class="ctxt score">0</text>
+              <text id="p1_score" x="0" y="90" class="ctxt score">0</text>
             </svg>
           </td>
         </tr>
@@ -132,13 +110,13 @@
           <td class="black">
             <svg width="67" height="98" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <rect x="5" y="5" rx="5" ry="5" width="57" height="88" style="stroke: black;" />
-              <text x="17" y="68" class="ctxt player">0</text>
+              <text id="p1_black_cards" x="17" y="68" class="ctxt player">0</text>
             </svg>
           </td>
-          <td class="coin black">
+          <td class="black">
             <svg width="70" height="98" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <circle cx="36" cy="50" r="29" style="stroke:SaddleBrown; stroke-width:5px; fill:white;" />
-              <text x="19" y="68" class="ctxt player">0</text>
+              <text id="p1_black_coins" x="19" y="68" class="ctxt player">0</text>
             </svg>
           </td>
         </tr>
@@ -146,13 +124,13 @@
           <td class="red">
             <svg width="67" height="98" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <rect x="5" y="5" rx="5" ry="5" width="57" height="88" style="stroke: black;" />
-              <text x="17" y="68" class="ctxt player">0</text>
+              <text id="p1_red_cards" x="17" y="68" class="ctxt player">0</text>
             </svg>
           </td>
-          <td class="coin red">
+          <td class="red">
             <svg width="70" height="98" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <circle cx="36" cy="50" r="29" style="stroke:Crimson; stroke-width:5px; fill:white;" />
-              <text x="19" y="68" class="ctxt player">0</text>
+              <text id="p1_red_coins" x="19" y="68" class="ctxt player">0</text>
             </svg>
           </td>
         </tr>
@@ -160,13 +138,13 @@
           <td class="green">
             <svg width="67" height="98" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <rect x="5" y="5" rx="5" ry="5" width="57" height="88" style="stroke: black;" />
-              <text x="17" y="68" class="ctxt player">0</text>
+              <text id="p1_green_cards" x="17" y="68" class="ctxt player">0</text>
             </svg>
           </td>
-          <td class="coin green">
+          <td class="green">
             <svg width="70" height="98" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <circle cx="36" cy="50" r="29" style="stroke:ForestGreen; stroke-width:5px; fill:white;" />
-              <text x="19" y="68" class="ctxt player">0</text>
+              <text id="p1_green_coins" x="19" y="68" class="ctxt player">0</text>
             </svg>
           </td>
         </tr>
@@ -174,13 +152,13 @@
           <td class="blue">
             <svg width="67" height="98" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <rect x="5" y="5" rx="5" ry="5" width="57" height="88" style="stroke: black;" />
-              <text x="17" y="68" class="ctxt player">0</text>
+              <text id="p1_blue_cards" x="17" y="68" class="ctxt player">0</text>
             </svg>
           </td>
-          <td class="coin blue">
+          <td class="blue">
             <svg width="70" height="98" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <circle cx="36" cy="50" r="29" style="stroke:DodgerBlue; stroke-width:5px; fill:white;" />
-              <text x="19" y="68" class="ctxt player">0</text>
+              <text id="p1_blue_coins" x="19" y="68" class="ctxt player">0</text>
             </svg>
           </td>
         </tr>
@@ -188,24 +166,36 @@
           <td class="white">
             <svg width="67" height="98" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <rect x="5" y="5" rx="5" ry="5" width="57" height="88" style="stroke: black;" />
-              <text x="17" y="68" class="ctxt player">0</text>
+              <text id="p1_white_cards" x="17" y="68" class="ctxt player">0</text>
             </svg>
           </td>
-          <td class="coin white">
+          <td class="white">
             <svg width="70" height="98" xmlns="http://www.w3.org/2000/svg" version="1.1">
-              <circle cx="36" cy="50" r="29" style="stroke:Beige; stroke-width:5px; fill:white;" />
-              <text x="19" y="68" class="ctxt player">0</text>
+              <circle cx="36" cy="50" r="29" style="stroke:Moccasin; stroke-width:5px; fill:white;" />
+              <text id="p1_white_coins" x="19" y="68" class="ctxt player">0</text>
             </svg>
           </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td class="yellow">
+            <svg width="70" height="98" xmlns="http://www.w3.org/2000/svg" version="1.1">
+              <circle cx="36" cy="50" r="29" style="stroke:gold; stroke-width:5px;" />
+              <text id="p1_gold" x="19" y="68" class="ctxt player">0</text>
+            </svg>
+          </td>
+        </tr>
+        <tr>
+          <td id="p1_reserved" colspan="2" align="center"></td>
         </tr>
       </table>
     </div>
     <div id="player2" style="position:absolute;right:100px;">
       <table>
         <tr>
-          <td id="score" colspan="2" align="center">
+          <td colspan="2" align="center">
             <svg width="150" height="100" xmlns="http://www.w3.org/2000/svg" version="1.1">
-              <text x="0" y="90" class="ctxt score">0</text>
+              <text id="p2_score" x="0" y="90" class="ctxt score">0</text>
             </svg>
           </td>
         </tr>
@@ -213,13 +203,13 @@
           <td class="black">
             <svg width="67" height="98" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <rect x="5" y="5" rx="5" ry="5" width="57" height="88" style="stroke: black;" />
-              <text x="17" y="68" class="ctxt player">0</text>
+              <text id="p2_black_cards" x="17" y="68" class="ctxt player">0</text>
             </svg>
           </td>
-          <td class="coin black">
+          <td class="black">
             <svg width="70" height="98" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <circle cx="36" cy="50" r="29" style="stroke:SaddleBrown; stroke-width:5px; fill:white;" />
-              <text x="19" y="68" class="ctxt player">0</text>
+              <text id="p2_black_coins" x="19" y="68" class="ctxt player">0</text>
             </svg>
           </td>
         </tr>
@@ -227,13 +217,13 @@
           <td class="red">
             <svg width="67" height="98" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <rect x="5" y="5" rx="5" ry="5" width="57" height="88" style="stroke: black;" />
-              <text x="17" y="68" class="ctxt player">0</text>
+              <text id="p2_red_cards" x="17" y="68" class="ctxt player">0</text>
             </svg>
           </td>
-          <td class="coin red">
+          <td class="red">
             <svg width="70" height="98" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <circle cx="36" cy="50" r="29" style="stroke:Crimson; stroke-width:5px; fill:white;" />
-              <text x="19" y="68" class="ctxt player">0</text>
+              <text id="p2_red_coins" x="19" y="68" class="ctxt player">0</text>
             </svg>
           </td>
         </tr>
@@ -241,13 +231,13 @@
           <td class="green">
             <svg width="67" height="98" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <rect x="5" y="5" rx="5" ry="5" width="57" height="88" style="stroke: black;" />
-              <text x="17" y="68" class="ctxt player">0</text>
+              <text id="p2_green_cards" x="17" y="68" class="ctxt player">0</text>
             </svg>
           </td>
-          <td class="coin green">
+          <td class="green">
             <svg width="70" height="98" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <circle cx="36" cy="50" r="29" style="stroke:ForestGreen; stroke-width:5px; fill:white;" />
-              <text x="19" y="68" class="ctxt player">0</text>
+              <text id="p2_green_coins" x="19" y="68" class="ctxt player">0</text>
             </svg>
           </td>
         </tr>
@@ -255,13 +245,13 @@
           <td class="blue">
             <svg width="67" height="98" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <rect x="5" y="5" rx="5" ry="5" width="57" height="88" style="stroke: black;" />
-              <text x="17" y="68" class="ctxt player">0</text>
+              <text id="p2_blue_cards" x="17" y="68" class="ctxt player">0</text>
             </svg>
           </td>
-          <td class="coin blue">
+          <td class="blue">
             <svg width="70" height="98" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <circle cx="36" cy="50" r="29" style="stroke:DodgerBlue; stroke-width:5px; fill:white;" />
-              <text x="19" y="68" class="ctxt player">0</text>
+              <text id="p2_blue_coins" x="19" y="68" class="ctxt player">0</text>
             </svg>
           </td>
         </tr>
@@ -269,28 +259,41 @@
           <td class="white">
             <svg width="67" height="98" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <rect x="5" y="5" rx="5" ry="5" width="57" height="88" style="stroke: black;" />
-              <text x="17" y="68" class="ctxt player">0</text>
+              <text id="p2_white_cards" x="17" y="68" class="ctxt player">0</text>
             </svg>
           </td>
-          <td class="coin white">
+          <td class="white">
             <svg width="70" height="98" xmlns="http://www.w3.org/2000/svg" version="1.1">
-              <circle cx="36" cy="50" r="29" style="stroke:Beige; stroke-width:5px; fill:white;" />
-              <text x="19" y="68" class="ctxt player">0</text>
+              <circle cx="36" cy="50" r="29" style="stroke:Moccasin; stroke-width:5px; fill:white;" />
+              <text id="p2_white_coins" x="19" y="68" class="ctxt player">0</text>
             </svg>
           </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td class="yellow">
+            <svg width="70" height="98" xmlns="http://www.w3.org/2000/svg" version="1.1">
+              <circle cx="36" cy="50" r="29" style="stroke:gold; stroke-width:5px;" />
+              <text id="p2_gold" x="19" y="68" class="ctxt player">0</text>
+            </svg>
+          </td>
+        </tr>
+        <tr>
+          <td id="p2_reserved" colspan="2" align="center"></td>
         </tr>
       </table>
     </div>
     <div style="margin:0 auto;width:650px;">
       <table>
         <tr>
-          <td id="m0" class="coin yellow">
+          <td class="yellow">
             <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <!-- Coin -->
               <circle cx="50" cy="50" r="40" style="stroke:Gold; stroke-width:5px; fill:Gold;" />
+              <text id="m5" x="0" y="90" class="ctxt vp">0</text>
             </svg>
           </td>
-          <td id="m1" class="coin black">
+          <td class="coin black">
             <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <!-- Coin -->
               <circle cx="50" cy="50" r="40" style="stroke:SaddleBrown; stroke-width:5px; fill:white;" />
@@ -301,9 +304,10 @@
                 <polyline points="40,38 42,45 50,37 58,45 60,38" />
                 <polyline points="42,45 50,68 58,45" />
               </g>
+              <text id="m4" x="0" y="90" class="ctxt vp">0</text>
             </svg>
           </td>
-          <td id="m2" class="coin red">
+          <td class="coin red">
             <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <!-- Coin -->
               <circle cx="50" cy="50" r="40" style="stroke:Crimson; stroke-width:5px; fill:white;" />
@@ -314,9 +318,10 @@
                 <polyline points="40,38 42,45 50,37 58,45 60,38" />
                 <polyline points="42,45 50,68 58,45" />
               </g>
+              <text id="m3" x="0" y="90" class="ctxt vp">0</text>
             </svg>
           </td>
-          <td id="m3" class="coin green">
+          <td class="coin green">
             <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <!-- Coin -->
               <circle cx="50" cy="50" r="40" style="stroke:ForestGreen; stroke-width:5px; fill:white;" />
@@ -327,9 +332,10 @@
                 <polyline points="40,38 42,45 50,37 58,45 60,38" />
                 <polyline points="42,45 50,68 58,45" />
               </g>
+              <text id="m2" x="0" y="90" class="ctxt vp">0</text>
             </svg>
           </td>
-          <td id="m4" class="coin blue">
+          <td class="coin blue">
             <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <!-- Coin -->
               <circle cx="50" cy="50" r="40" style="stroke:DodgerBlue; stroke-width:5px; fill:white;" />
@@ -340,12 +346,13 @@
                 <polyline points="40,38 42,45 50,37 58,45 60,38" />
                 <polyline points="42,45 50,68 58,45" />
               </g>
+              <text id="m1" x="0" y="90" class="ctxt vp">0</text>
             </svg>
           </td>
-          <td id="m5" class="coin white">
+          <td class="coin white">
             <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" version="1.1">
               <!-- Coin -->
-              <circle cx="50" cy="50" r="40" style="stroke:Beige; stroke-width:5px; fill:white;" />
+              <circle cx="50" cy="50" r="40" style="stroke:Moccasin; stroke-width:5px; fill:white;" />
               <!-- Gem -->
               <polygon points="40,38 50,37 60,38 70,46 50,68 30,46" class="j"/>
               <g class="line">+28
@@ -353,6 +360,7 @@
                 <polyline points="40,38 42,45 50,37 58,45 60,38" />
                 <polyline points="42,45 50,68 58,45" />
               </g>
+              <text id="m0" x="0" y="90" class="ctxt vp">0</text>
             </svg>
           </td>
         </tr>
@@ -372,118 +380,10 @@
               <circle cx="74" cy="170" r="4" style="stroke: none; fill: white;" />
             </svg>
           </td>
-          <td id="30" class="card black">
-            <svg width="124" height="186" xmlns="http://www.w3.org/2000/svg" version="1.1">
-              <!-- Card -->
-              <rect x="5" y="5" rx="15" ry="15" width="114" height="176" style="stroke: none; opacity:0.5;" />
-              <rect x="5" y="5" width="114" height="40" style="stroke: none; fill: white; opacity:0.5" />
-              <rect x="5" y="5" rx="15" ry="15" width="114" height="176" style="stroke: black; fill: none;" />
-              <!-- Gem -->
-              <polygon points="80,10 90,9 100,10 110,18 90,40 70,18" class="j"/>
-              <g class="line">
-                <polyline points="70,18 82,17 98,17 110,18" />
-                <polyline points="80,10 82,17 90,9 98,17 100,10" />
-                <polyline points="82,17 90,40 98,17" />
-              </g>
-              <!-- Victory points -->
-              <text x="14" y="37" class="ctxt vp">3</text>
-              <!-- Costs -->
-              <g class="m">
-                <circle id="cc3" cx="21" cy="74" r="12" class="white" />
-                <text id="c3" x="14" y="82" class="ctxt cost">3</text>
-                <circle id="cc2" cx="21" cy="102" r="12" class="blue" />
-                <text id="c2" x="14" y="110" class="ctxt cost">3</text>
-                <circle id="cc1" cx="21" cy="130" r="12" class="green" />
-                <text id="c1" x="14" y="138" class="ctxt cost">5</text>
-                <circle id="cc0" cx="21" cy="158" r="12" class="red" />
-                <text id="c0" x="14" y="166" class="ctxt cost">3</text>
-              </g>
-            </svg>
-          </td>
-          <td id="31" class="card black">
-            <svg width="124" height="186" xmlns="http://www.w3.org/2000/svg" version="1.1">
-              <!-- Card -->
-              <rect x="5" y="5" rx="15" ry="15" width="114" height="176" style="stroke: none; opacity:0.5;" />
-              <rect x="5" y="5" width="114" height="40" style="stroke: none; fill: white; opacity:0.5" />
-              <rect x="5" y="5" rx="15" ry="15" width="114" height="176" style="stroke: black; fill: none;" />
-              <!-- Gem -->
-              <polygon points="80,10 90,9 100,10 110,18 90,40 70,18" class="j"/>
-              <g class="line">
-                <polyline points="70,18 82,17 98,17 110,18" />
-                <polyline points="80,10 82,17 90,9 98,17 100,10" />
-                <polyline points="82,17 90,40 98,17" />
-              </g>
-              <!-- Victory points -->
-              <text x="14" y="37" class="ctxt vp">4</text>
-              <!-- Costs -->
-              <g class="m">
-                <circle id="cc3" cx="21" cy="74" r="12" class="none" />
-                <text id="c3" x="14" y="82" class="ctxt cost"></text>
-                <circle id="cc2" cx="21" cy="102" r="12" class="green" />
-                <text id="c2" x="14" y="110" class="ctxt cost">3</text>
-                <circle id="cc1" cx="21" cy="130" r="12" class="red" />
-                <text id="c1" x="14" y="138" class="ctxt cost">6</text>
-                <circle id="cc0" cx="21" cy="158" r="12" class="black" />
-                <text id="c0" x="14" y="166" class="ctxt cost">3</text>
-              </g>
-            </svg>
-          </td>
-          <td id="32" class="card blue">
-            <svg width="124" height="186" xmlns="http://www.w3.org/2000/svg" version="1.1">
-              <!-- Card -->
-              <rect x="5" y="5" rx="15" ry="15" width="114" height="176" style="stroke: none; opacity:0.5;" />
-              <rect x="5" y="5" width="114" height="40" style="stroke: none; fill: white; opacity:0.5" />
-              <rect x="5" y="5" rx="15" ry="15" width="114" height="176" style="stroke: black; fill: none;" />
-              <!-- Gem -->
-              <polygon points="80,10 90,9 100,10 110,18 90,40 70,18" class="j"/>
-              <g class="line">
-                <polyline points="70,18 82,17 98,17 110,18" />
-                <polyline points="80,10 82,17 90,9 98,17 100,10" />
-                <polyline points="82,17 90,40 98,17" />
-              </g>
-              <!-- Victory points -->
-              <text x="14" y="37" class="ctxt vp">5</text>
-              <!-- Costs -->
-              <g class="m">
-                <circle id="cc3" cx="21" cy="74" r="12" class="none" />
-                <text id="c3" x="14" y="82" class="ctxt cost"></text>
-                <circle id="cc2" cx="21" cy="102" r="12" class="none" />
-                <text id="c2" x="14" y="110" class="ctxt cost"></text>
-                <circle id="cc1" cx="21" cy="130" r="12" class="white" />
-                <text id="c1" x="14" y="138" class="ctxt cost">7</text>
-                <circle id="cc0" cx="21" cy="158" r="12" class="blue" />
-                <text id="c0" x="14" y="166" class="ctxt cost">3</text>
-              </g>
-            </svg>
-          </td>
-          <td id="33" class="card red">
-            <svg width="124" height="186" xmlns="http://www.w3.org/2000/svg" version="1.1">
-              <!-- Card -->
-              <rect x="5" y="5" rx="15" ry="15" width="114" height="176" style="stroke: none; opacity:0.5;" />
-              <rect x="5" y="5" width="114" height="40" style="stroke: none; fill: white; opacity:0.5" />
-              <rect x="5" y="5" rx="15" ry="15" width="114" height="176" style="stroke: black; fill: none;" />
-              <!-- Gem -->
-              <polygon points="80,10 90,9 100,10 110,18 90,40 70,18" class="j"/>
-              <g class="line">
-                <polyline points="70,18 82,17 98,17 110,18" />
-                <polyline points="80,10 82,17 90,9 98,17 100,10" />
-                <polyline points="82,17 90,40 98,17" />
-              </g>
-              <!-- Victory points -->
-              <text x="14" y="37" class="ctxt vp">4</text>
-              <!-- Costs -->
-              <g class="m">
-                <circle id="cc3" cx="21" cy="74" r="12" class="none" />
-                <text id="c3" x="14" y="82" class="ctxt cost"></text>
-                <circle id="cc2" cx="21" cy="102" r="12" class="none" />
-                <text id="c2" x="14" y="110" class="ctxt cost"></text>
-                <circle id="cc1" cx="21" cy="130" r="12" class="none" />
-                <text id="c1" x="14" y="138" class="ctxt cost"></text>
-                <circle id="cc0" cx="21" cy="158" r="12" class="blue" />
-                <text id="c0" x="14" y="166" class="ctxt cost">7</text>
-              </g>
-            </svg>
-          </td>
+          <td id="30"></td>
+          <td id="31"></td>
+          <td id="32"></td>
+          <td id="33"></td>
         </tr>
         <tr>
           <td id="s2" class="card yellow">
@@ -499,14 +399,10 @@
               <circle cx="68" cy="170" r="4" style="stroke: none; fill: white;" />
             </svg>
           </td>
-          <td id="20" class="card red">
-          </td>
-          <td id="21" class="card red">
-          </td>
-          <td id="22" class="card red">
-          </td>
-          <td id="23" class="card red">
-          </td>
+          <td id="20"></td>
+          <td id="21"></td>
+          <td id="22"></td>
+          <td id="23"></td>
         </tr>
         <tr>
           <td id="s1" class="card green">
@@ -521,14 +417,10 @@
               <circle cx="62" cy="170" r="4" style="stroke: none; fill: white;" />
             </svg>
           </td>
-          <td id="10" class="card red">
-          </td>
-          <td id="11" class="card red">
-          </td>
-          <td id="12" class="card red">
-          </td>
-          <td id="13" class="card red">
-          </td>
+          <td id="10"></td>
+          <td id="11"></td>
+          <td id="12"></td>
+          <td id="13"></td>
         </tr>
       </table>
       <table>
