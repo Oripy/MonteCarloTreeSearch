@@ -10,15 +10,21 @@ I don't think [Tic Tac Toe](https://boardgamegeek.com/boardgame/11901/tic-tac-to
 
 Current implementation is unbeatable (if you give it enough time to calculate the next move).
 
+[Test the game!](https://oripy.github.io/MonteCarloTreeSearch/tictactoe.html)
+
 ### Connect Four
 
 [Connect four](https://boardgamegeek.com/boardgame/2719/connect-four) is a well known two player perfect information game where players place alternatively a rounf piece in a column and try to form a 4-in-a-row.
+
+[Test the game!](https://oripy.github.io/MonteCarloTreeSearch/connectfour.html)
 
 ### Quarto
 
 [Quarto](https://boardgamegeek.com/boardgame/681/quarto) is a two player perfect information game with a clever twist: your opponent chooses the piece you have to place on the board.
 
-The current implementation fills up the memory of the browser very quickly.
+Warning: the current implementation fills up the memory of the browser very quickly.
+
+[Test the game!](https://oripy.github.io/MonteCarloTreeSearch/quarto.html)
 
 ## Game in development
 
@@ -34,4 +40,4 @@ Currently in development for two players on its own branch.
 
 [7 Wonders Duel](https://boardgamegeek.com/boardgame/173346/7-wonders-duel) is a two player adaptation of the well known game 7 Wonders. The two players build their civilisation and try to best the opponent in Military, Science or Victory Points.
 
-Currently in development on its own branch
+Currently in development on its own branch.
