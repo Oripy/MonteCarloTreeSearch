@@ -147,9 +147,9 @@ Node.prototype.get_UCB1 = function() {
   // return (this.wins / this.visits) + Math.sqrt(2 * Math.log(this.parent_node.visits) / this.visits);
   // return ((this.wins + 1) / (this.visits+2)) + Math.sqrt(2 * Math.log(this.parent_node.visits) / (this.visits+1));
   if (this.get_player() == 1) {
-    return this.minimax/100 + Math.sqrt(2 * Math.log(this.parent_node.visits)/(this.visits));
+    return this.minimax/1000 + Math.sqrt(2 * Math.log(this.parent_node.visits)/(this.visits));
   } else {
-    return -this.minimax/100 + Math.sqrt(2 * Math.log(this.parent_node.visits)/(this.visits));
+    return -this.minimax/1000 + Math.sqrt(2 * Math.log(this.parent_node.visits)/(this.visits));
   }
 }
 

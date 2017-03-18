@@ -46,12 +46,8 @@ var MonteCarlo = function(game, state) {
       } while (current_node.parent_node !== undefined);
       this.nb_simul++;
       if (this.nb_simul % 1000 == 0) {
-        // console.log(this.nb_simul);
-        // show most promising move
-        // this.next();
+        console.log(this.nb_simul, this.root_node.visits);
       }
-    } else {
-      // this.next();
     }
   }
 
