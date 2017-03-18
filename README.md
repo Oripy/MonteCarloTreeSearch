@@ -2,7 +2,7 @@
 
 Tentative to build a general monte carlo tree search AI for modern two players game in javascript.
 
-## Games implemented:
+## Games implemented
 
 ### Tic Tac Toe
 
