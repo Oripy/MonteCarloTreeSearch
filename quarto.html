@@ -7,6 +7,7 @@
       <script type="text/javascript" src="quarto.js"></script>
       <script type="text/javascript" src="montecarlo.js"></script>
       <script type="text/javascript" src="node_object.js"></script>
+      <link rel="stylesheet" type="text/css" href="slider.css">
       <style>
         td {
           padding: 0px;
@@ -17,20 +18,21 @@
           margin: auto;
         }
 
-        div {
+        .cell {
           width: 100px;
           height: 100px;
-
-          background-color: LightBlue;
           border-width: 0px;
-          border-style: solid;
+          background-color: LightBlue;
         }
 
-        div:hover {
+        .cell:hover {
           background-color: DeepSkyBlue;
         }
 
         .piece {
+          width: 100px;
+          height: 100px;
+          border-width: 0px;
           background-color: LightCoral;
         }
 
@@ -39,6 +41,9 @@
         }
 
         .selected {
+          width: 100px;
+          height: 100px;
+          border-width: 0px;
           background-color: FireBrick;
         }
 
@@ -50,23 +55,43 @@
           font-size: 50px;
           text-align: center;
         }
+
+        .players {
+          font-size: 30px;
+          position: fixed;
+          left: 20;
+          top: 15;
+        }
       </style>
     </head>
     <body>
       <p id="title">Quarto</p>
+      <div class="players">
+        J1 Ai
+        <label class="switch">
+          <input type="checkbox" id="j1">
+          <div class="slider round"></div>
+        </label><br><br>
+        J2 Ai
+        <label class="switch">
+          <input type="checkbox" id="j2">
+          <div class="slider round">
+          </div>
+        </label>
+      </div>
       <table>
         <tr>
           <td>
-            <div id="p0"></div>
+            <div class="cell" id="p0"></div>
           </td>
           <td>
-            <div id="p1"></div>
+            <div class="cell" id="p1"></div>
           </td>
           <td>
-            <div id="p2"></div>
+            <div class="cell" id="p2"></div>
           </td>
           <td>
-            <div id="p3"></div>
+            <div class="cell" id="p3"></div>
           </td>
           <td>
             <div id="0" class="piece" style="border-left:6px solid white"> </div>
@@ -83,16 +108,16 @@
         </tr>
         <tr>
           <td>
-            <div id="p4"></div>
+            <div class="cell" id="p4"></div>
           </td>
           <td>
-            <div id="p5"></div>
+            <div class="cell" id="p5"></div>
           </td>
           <td>
-            <div id="p6"></div>
+            <div class="cell" id="p6"></div>
           </td>
           <td>
-            <div id="p7"></div>
+            <div class="cell" id="p7"></div>
           </td>
           <td>
             <div id="4" class="piece" style="border-left:6px solid white"> </div>
@@ -109,16 +134,16 @@
         </tr>
         <tr>
           <td>
-            <div id="p8"></div>
+            <div class="cell" id="p8"></div>
           </td>
           <td>
-            <div id="p9"></div>
+            <div class="cell" id="p9"></div>
           </td>
           <td>
-            <div id="p10"></div>
+            <div class="cell" id="p10"></div>
           </td>
           <td>
-            <div id="p11"></div>
+            <div class="cell" id="p11"></div>
           </td>
           <td>
             <div id="8" class="piece" style="border-left:6px solid white"> </div>
@@ -135,16 +160,16 @@
         </tr>
         <tr>
           <td>
-            <div id="p12"></div>
+            <div class="cell" id="p12"></div>
           </td>
           <td>
-            <div id="p13"></div>
+            <div class="cell" id="p13"></div>
           </td>
           <td>
-            <div id="p14"></div>
+            <div class="cell" id="p14"></div>
           </td>
           <td>
-            <div id="p15"></div>
+            <div class="cell" id="p15"></div>
           </td>
           <td>
             <div id="12" class="piece" style="border-left:6px solid white"> </div>

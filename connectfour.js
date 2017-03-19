@@ -1,15 +1,15 @@
 var Game = function() {
                          //no player, player1, player2
-  this.display_values = ['<circle cx="50" cy="50" r="40" fill="White" />',
-                         '<circle cx="50" cy="50" r="40" fill="Red" />',
-                         '<circle cx="50" cy="50" r="40" fill="Yellow" />',];
+  this.display_values = ['<circle cx="35" cy="35" r="30" fill="White" />',
+                         '<circle cx="35" cy="35" r="30" fill="Red" />',
+                         '<circle cx="35" cy="35" r="30" fill="Yellow" />',];
   this.board_length = 7*6;
   this.width = 7;
   this.height = 6;
 
   this.show = function(state) {
     for (var i = 0; i < state.length-1; i++) {
-      document.getElementById(i.toString()).innerHTML = '<svg width="100" height="100"><rect x="0" y="0" width="100" height="100" fill="Blue" />'+this.display_values[state[i]]+'</svg>';
+      document.getElementById(i.toString()).innerHTML = '<svg width="70" height="70"><rect x="0" y="0" width="70" height="70" fill="Blue" />'+this.display_values[state[i]]+'</svg>';
     }
   }
 
@@ -27,7 +27,7 @@ var Game = function() {
             0, 0, 0, 0, 0, 0, 0,
             first_player];
   }
-  
+
   this.init = function() {
     // Special highlighting of columns
     for (var a = 0; a < this.board_length; a++) {
@@ -39,15 +39,15 @@ var Game = function() {
           for (var i = 0; i < game.height; i++) {
             index = i*game.width+j;
             if (j == x) {
-              document.getElementById(index).className = "highlight";
+              document.getElementById(index).className = "cell highlight";
             } else {
-              document.getElementById(index).className = "none";
+              document.getElementById(index).className = "cell none";
             }
           }
         }
       }
     }
-    
+
   }
 
   this.get_move = function(state, move) {
@@ -89,7 +89,7 @@ var Game = function() {
     // new_state = state.slice();
 
     next_player = this.get_next_player(state);
-    
+
     // record the move
     new_state[realmove] = next_player;
     // change the player recorded to have played the move

@@ -7,6 +7,7 @@
       <script type="text/javascript" src="tictactoe.js"></script>
       <script type="text/javascript" src="montecarlo.js"></script>
       <script type="text/javascript" src="node_object.js"></script>
+      <link rel="stylesheet" type="text/css" href="slider.css">
       <style>
         td {
           padding: 0px;
@@ -17,7 +18,7 @@
           margin: auto;
         }
 
-        div {
+        .cell {
           width: 150px;
           height: 150px;
 
@@ -30,51 +31,71 @@
           border-style: solid;
         }
 
-        div:hover {
+        .cell:hover {
           background-color: DeepSkyBlue;
         }
 
-        p {
+        #title {
           font-size: 50px;
           text-align: center;
         }
-      </style>
 
+        .players {
+          font-size: 30px;
+          position: fixed;
+          left: 20;
+          top: 15;
+        }
+      </style>
     </head>
     <body>
       <p id="title">Tic Tac Toe</p>
+      <div class="players">
+        J1 Ai
+        <label class="switch">
+          <input type="checkbox" id="j1">
+          <div class="slider round"></div>
+        </label><br><br>
+        J2 Ai
+        <label class="switch">
+          <input type="checkbox" id="j2">
+          <div class="slider round">
+          </div>
+        </label>
+      </div>
+
       <table>
         <tr>
           <td>
-            <div id="0" style="border-width:0px 6px 6px 0px"> </div>
+            <div class="cell" id="0" style="border-width:0px 6px 6px 0px"> </div>
           </td>
           <td>
-            <div id="1" style="border-width:0px 6px 6px 6px"> </div>
+            <div class="cell" id="1" style="border-width:0px 6px 6px 6px"> </div>
           </td>
           <td>
-            <div id="2" style="border-width:0px 0px 6px 6px"> </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div id="3" style="border-width:6px 6px 6px 0px"> </div>
-          </td>
-          <td>
-            <div id="4" style="border-width:6px 6px 6px 6px"> </div>
-          </td>
-          <td>
-            <div id="5" style="border-width:6px 0px 6px 6px"> </div>
+            <div class="cell" id="2" style="border-width:0px 0px 6px 6px"> </div>
           </td>
         </tr>
         <tr>
           <td>
-            <div id="6" style="border-width:6px 6px 0px 0px"> </div>
+            <div class="cell" id="3" style="border-width:6px 6px 6px 0px"> </div>
           </td>
           <td>
-            <div id="7" style="border-width:6px 6px 0px 6px"> </div>
+            <div class="cell" id="4" style="border-width:6px 6px 6px 6px"> </div>
           </td>
           <td>
-            <div id="8" style="border-width:6px 0px 0px 6px"> </div>
+            <div class="cell" id="5" style="border-width:6px 0px 6px 6px"> </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="cell" class="cell" id="6" style="border-width:6px 6px 0px 0px"> </div>
+          </td>
+          <td>
+            <div class="cell" id="7" style="border-width:6px 6px 0px 6px"> </div>
+          </td>
+          <td>
+            <div class="cell" id="8" style="border-width:6px 0px 0px 6px"> </div>
           </td>
         </tr>
       </table>
