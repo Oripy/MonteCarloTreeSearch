@@ -7,9 +7,10 @@
       <script type="text/javascript" src="connectfour.js"></script>
       <script type="text/javascript" src="montecarlo.js"></script>
       <script type="text/javascript" src="node_object.js"></script>
+      <link rel="stylesheet" type="text/css" href="slider.css">
       <style>
         td {
-          padding: 0px;
+          padding: 0px 0px 0px 0px;
         }
 
         table {
@@ -17,9 +18,9 @@
           margin: auto;
         }
 
-        div {
-          width: 100px;
-          height: 100px;
+        .cell {
+          width: 70px;
+          height: 70px;
           border-style: none;
         }
 
@@ -31,148 +32,168 @@
         .highlight {
           opacity:0.4;
         }
+
+        .players {
+          font-size: 30px;
+          position: fixed;
+          left: 20;
+          top: 15;
+        }
       </style>
     </head>
     <body>
       <p id="title">Connect Four</p>
+      <div class="players">
+        J1 Ai
+        <label class="switch">
+          <input type="checkbox" id="j1">
+          <div class="slider round"></div>
+        </label><br><br>
+        J2 Ai
+        <label class="switch">
+          <input type="checkbox" id="j2">
+          <div class="slider round">
+          </div>
+        </label>
+      </div>
       <table>
         <tr>
           <td>
-            <div id="0"> </div>
+            <div class="cell" id="0"> </div>
           </td>
           <td>
-            <div id="1"> </div>
+            <div class="cell" id="1"> </div>
           </td>
           <td>
-            <div id="2"> </div>
+            <div class="cell" id="2"> </div>
           </td>
           <td>
-            <div id="3"> </div>
+            <div class="cell" id="3"> </div>
           </td>
           <td>
-            <div id="4"> </div>
+            <div class="cell" id="4"> </div>
           </td>
           <td>
-            <div id="5"> </div>
+            <div class="cell" id="5"> </div>
           </td>
           <td>
-            <div id="6"> </div>
+            <div class="cell" id="6"> </div>
           </td>
 
         </tr>
         <tr>
           <td>
-            <div id="7"> </div>
+            <div class="cell" id="7"> </div>
           </td>
           <td>
-            <div id="8"> </div>
+            <div class="cell" id="8"> </div>
           </td>
           <td>
-            <div id="9"> </div>
+            <div class="cell" id="9"> </div>
           </td>
           <td>
-            <div id="10"> </div>
+            <div class="cell" id="10"> </div>
           </td>
           <td>
-            <div id="11"> </div>
+            <div class="cell" id="11"> </div>
           </td>
           <td>
-            <div id="12"> </div>
+            <div class="cell" id="12"> </div>
           </td>
           <td>
-            <div id="13"> </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div id="14"> </div>
-          </td>
-          <td>
-            <div id="15"> </div>
-          </td>
-          <td>
-            <div id="16"> </div>
-          </td>
-          <td>
-            <div id="17"> </div>
-          </td>
-          <td>
-            <div id="18"> </div>
-          </td>
-          <td>
-            <div id="19"> </div>
-          </td>
-          <td>
-            <div id="20"> </div>
+            <div class="cell" id="13"> </div>
           </td>
         </tr>
         <tr>
           <td>
-            <div id="21"> </div>
+            <div class="cell" id="14"> </div>
           </td>
           <td>
-            <div id="22"> </div>
+            <div class="cell" id="15"> </div>
           </td>
           <td>
-            <div id="23"> </div>
+            <div class="cell" id="16"> </div>
           </td>
           <td>
-            <div id="24"> </div>
+            <div class="cell" id="17"> </div>
           </td>
           <td>
-            <div id="25"> </div>
+            <div class="cell" id="18"> </div>
           </td>
           <td>
-            <div id="26"> </div>
+            <div class="cell" id="19"> </div>
           </td>
           <td>
-            <div id="27"> </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div id="28"> </div>
-          </td>
-          <td>
-            <div id="29"> </div>
-          </td>
-          <td>
-            <div id="30"> </div>
-          </td>
-          <td>
-            <div id="31"> </div>
-          </td>
-          <td>
-            <div id="32"> </div>
-          </td>
-          <td>
-            <div id="33"> </div>
-          </td>
-          <td>
-            <div id="34"> </div>
+            <div class="cell" id="20"> </div>
           </td>
         </tr>
         <tr>
           <td>
-            <div id="35"> </div>
+            <div class="cell" id="21"> </div>
           </td>
           <td>
-            <div id="36"> </div>
+            <div class="cell" id="22"> </div>
           </td>
           <td>
-            <div id="37"> </div>
+            <div class="cell" id="23"> </div>
           </td>
           <td>
-            <div id="38"> </div>
+            <div class="cell" id="24"> </div>
           </td>
           <td>
-            <div id="39"> </div>
+            <div class="cell" id="25"> </div>
           </td>
           <td>
-            <div id="40"> </div>
+            <div class="cell" id="26"> </div>
           </td>
           <td>
-            <div id="41"> </div>
+            <div class="cell" id="27"> </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="cell" id="28"> </div>
+          </td>
+          <td>
+            <div class="cell" id="29"> </div>
+          </td>
+          <td>
+            <div class="cell" id="30"> </div>
+          </td>
+          <td>
+            <div class="cell" id="31"> </div>
+          </td>
+          <td>
+            <div class="cell" id="32"> </div>
+          </td>
+          <td>
+            <div class="cell" id="33"> </div>
+          </td>
+          <td>
+            <div class="cell" id="34"> </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="cell" id="35"> </div>
+          </td>
+          <td>
+            <div class="cell" id="36"> </div>
+          </td>
+          <td>
+            <div class="cell" id="37"> </div>
+          </td>
+          <td>
+            <div class="cell" class="cell" id="38"> </div>
+          </td>
+          <td>
+            <div class="cell" id="39"> </div>
+          </td>
+          <td>
+            <div class="cell" id="40"> </div>
+          </td>
+          <td>
+            <div class="cell" id="41"> </div>
           </td>
         </tr>
       </table>

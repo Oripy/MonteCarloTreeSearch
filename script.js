@@ -1,4 +1,3 @@
-var players = ["Ai", "Ai"];
 var game;
 var state;
 
@@ -9,13 +8,24 @@ window.onload = function() {
   game.show(state);
   var last_move = null;
 
+  get_players = function() {
+    var players = ["Human", "Human"];
+    if (document.getElementById("j1").checked) {
+      players[0] = "Ai";
+    }
+    if (document.getElementById("j2").checked) {
+      players[1] = "Ai";
+    }
+    return players;
+  }
+
   show_winner = function(game, state) {
     var winner = game.winner(state);
     if (winner != -1) {
       if (winner == 0) {
         var result = "Egalité"
       } else {
-        var result = players[winner-1]+" gagne";
+        var result = "J"+winner+" gagne";
       }
       document.getElementById("result").innerHTML = result;
     }
@@ -38,7 +48,7 @@ window.onload = function() {
         simul = mc.start();
         document.getElementById("result").innerHTML = "";
       } else {
-        if (players[game.get_next_player(state)-1] == "Human") {
+        if (get_players()[game.get_next_player(state)-1] == "Human") {
           move = game.get_move(state, parseInt(this.id));
           if (move !== -1) {
           var new_state = game.next_state(state, move);
@@ -50,7 +60,7 @@ window.onload = function() {
               show_winner(game, state);
               if (game.winner(state) === -1) {
                 setTimeout(function() {
-                  if (players[game.get_next_player(state)-1] != "Human") {
+                  if (get_players()[game.get_next_player(state)-1] != "Human") {
                     last_move = mc.next();
                     state = game.next_state(state, last_move);
                     mc.set_root(state, last_move);
