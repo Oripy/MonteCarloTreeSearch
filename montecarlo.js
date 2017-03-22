@@ -1,3 +1,6 @@
+importScripts('node_object.js');
+
+
 var MonteCarlo = function(game, state) {
   this.game = game;
   this.root_node = new Node(null, undefined, this.game, 0);
@@ -5,9 +8,9 @@ var MonteCarlo = function(game, state) {
   this.root_node.get_player();
   this.nb_simul = 0;
 
-  this.start = function() {
-    // var self = this;
-    return setInterval(this.simul.bind(this), 0);
+  this.start = function(interval) {
+    if (typeof interval === 'undefined') { interval = 0; }
+    return setInterval(this.simul.bind(this), interval);
   }
 
   this.simul = function() {
@@ -17,8 +20,8 @@ var MonteCarlo = function(game, state) {
       this.root_node.visits++;
       while ((current_node.visits > 1) && (current_node.get_children().length != 0)) {
         // SELECTION + EXPANSION
-        current_node = current_node.next_move();
-        // current_node = current_node.next_random_move();
+        // current_node = current_node.next_move();
+        current_node = current_node.next_random_move();
         current_node.minimax = null;
         current_node.visits++;
       }
@@ -45,7 +48,7 @@ var MonteCarlo = function(game, state) {
         current_node = current_node.parent_node;
       } while (current_node.parent_node !== undefined);
       this.nb_simul++;
-      if (this.nb_simul % 1000 == 0) {
+      if (this.nb_simul % 10000 == 0) {
         console.log(this.nb_simul, this.root_node.visits);
       }
     }
@@ -197,4 +200,41 @@ node_compare_success = function(a, b) {
     value = -1;
   }
   return value;
+}
+
+var game;
+var state;
+var mc;
+var simul;
+
+
+onmessage = function(e) {
+  if (e.data[0] == "load") {
+    if (e.data[1] == "Tic Tac Toe") {
+      importScripts('tictactoe.js');
+    } else if (e.data[1] == "Connect Four") {
+      importScripts('connectfour.js');
+    } else if (e.data[1] == "Quarto") {
+      importScripts('quarto.js');
+    } else {
+      console.log("Game not detected");
+    }
+    game = new Game();
+  } else if (e.data[0] == "start") {
+    console.log("start", e.data);
+    clearInterval(simul);
+    state = game.start(e.data[1]);
+    mc = new MonteCarlo(game, state);
+    console.log(mc, state);
+    if (typeof e.data[1] === 'undefined') { e.data[1] = 0; }
+    simul = mc.start(e.data[1]); // start the simulation
+  } else if (e.data == "get") {
+    console.log("get", e.data);
+    var move = mc.next();
+    mc.set_root(state, move);
+    postMessage(move); // send the next move
+  } else {
+    console.log("player move", e.data);
+    mc.set_root(state, e.data); // perform the player move
+  }
 }
