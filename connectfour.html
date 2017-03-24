@@ -5,8 +5,6 @@
       <title>Connect Four</title>
       <script type="text/javascript" src="script.js"></script>
       <script type="text/javascript" src="connectfour.js"></script>
-      <script type="text/javascript" src="montecarlo.js"></script>
-      <script type="text/javascript" src="node_object.js"></script>
       <link rel="stylesheet" type="text/css" href="slider.css">
       <style>
         td {
@@ -48,13 +46,14 @@
         <label class="switch">
           <input type="checkbox" id="j1">
           <div class="slider round"></div>
-        </label><br><br>
+        </label><br>
         J2 Ai
         <label class="switch">
-          <input type="checkbox" id="j2">
+          <input type="checkbox" id="j2" checked>
           <div class="slider round">
           </div>
-        </label>
+        </label><br>
+        <button onclick="play()">Next Move</button> 
       </div>
       <table>
         <tr>

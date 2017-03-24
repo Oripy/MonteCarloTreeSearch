@@ -112,34 +112,38 @@ Node.prototype.get_opponent = function() {
   return this.get_player()%2+1;
 }
 
+Node.prototype.set_terminal = function() {
+  this.terminal = true;
+  var current_node = this;
+  var all_terminal = true;
+  do {
+    var all_terminal = true;
+    if (current_node.parent_node != undefined) {
+      var siblings = current_node.parent_node.get_children();
+      for (var i = 0; i < siblings.length; i++) {
+        if (!siblings[i].terminal) {
+          all_terminal = false;
+        }
+      }
+      if (all_terminal) {
+        current_node.parent_node.set_terminal();
+        current_node = current_node.parent_node;
+      }
+    } else {
+      all_terminal = false;
+    }
+  } while (all_terminal);
+}
+
 Node.prototype.get_children = function() {
   var self = this;
   if (this.children == null) {
     var moves = this.game.legal_plays(this.get_state());
     this.children = moves.map(function(move) { return new Node(move, self, self.game, self.depth+1)});
   }
-  if ((!this.terminal) && (this.children.length == 0)) {
-    this.terminal = true;
-    var current_node = this;
-    var all_terminal = true;
-    do {
-      var all_terminal = true;
-      if (current_node.parent_node != undefined) {
-        var siblings = current_node.parent_node.get_children();
-        for (var i = 0; i < siblings.length; i++) {
-          if (!siblings[i].terminal) {
-            all_terminal = false;
-          }
-        }
-        if (all_terminal) {
-          current_node.parent_node.terminal = true;
-          current_node = current_node.parent_node;
-        }
-      } else {
-        all_terminal = false;
-      }
-    } while (all_terminal);
-  }
+  // if ((!this.terminal) && (this.children.length == 0)) {
+    // this.set_terminal();
+  // }
   return this.children;
 }
 
@@ -204,13 +208,15 @@ Node.prototype.next_random_move = function() {
 
 node_compare_UCB1 = function(a, b) {
   // sort with higher value of UCB1 first
-  value = b.get_UCB1() - a.get_UCB1();
+  var value = 0;
   if ((a.terminal) && (b.terminal)) {
     value = b.visits - a.visits;
   } else if (a.terminal) {
     value = 1;
   } else if (b.terminal) {
     value = -1;
+  } else {
+    value = b.get_UCB1() - a.get_UCB1();
   }
   return value;
 }
