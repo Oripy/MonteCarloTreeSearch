@@ -20,8 +20,8 @@ var MonteCarlo = function(game, state) {
       this.root_node.visits++;
       while ((current_node.visits > 1) && (current_node.get_children().length != 0)) {
         // SELECTION + EXPANSION
-        // current_node = current_node.next_move();
-        current_node = current_node.next_random_move();
+        current_node = current_node.next_move();
+        // current_node = current_node.next_random_move();
         current_node.minimax = null;
         current_node.visits++;
       }
@@ -32,6 +32,7 @@ var MonteCarlo = function(game, state) {
         current_node.minimax = null;
         current_node.visits++;
       }
+      current_node.set_terminal();
 
       // BACKPROPAGATION
       var winner = current_node.get_winner();
@@ -50,7 +51,12 @@ var MonteCarlo = function(game, state) {
       this.nb_simul++;
       if (this.nb_simul % 10000 == 0) {
         console.log(this.nb_simul, this.root_node.visits);
+        for (var i = 0; i < this.root_node.children.length; i++) {
+          console.log(this.root_node.children[i].terminal);
+        }
       }
+    } else {
+      console.log("Root node is terminal");
     }
   }
 
@@ -111,7 +117,7 @@ var MonteCarlo = function(game, state) {
 
     // console.log("-----");
     console.log("num simul:",this.nb_simul);
-    // console.log(this.root_node);
+    console.log(this.root_node);
     // list_nodes = this.root_node.get_children().sort(node_compare_success);
     // for (var i = 0; i < this.root_node.get_children().length; i++) {
     //   console.log(list_nodes[i].move,
@@ -144,8 +150,6 @@ var MonteCarlo = function(game, state) {
           this.root_node = children_list[i];
           this.root_node.get_children();
           this.root_node.parent_node = undefined;
-        } else {
-          delete children_list[i];
         }
       }
       return;
